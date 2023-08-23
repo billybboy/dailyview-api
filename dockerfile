@@ -8,10 +8,14 @@ COPY ./app /app
 WORKDIR /app
 EXPOSE 8000
 
-RUN python -m venv /py && \
+RUN apt-get update && \
+    apt-get install -y libpq-dev gcc && \
+    python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
+    /py/bin/pip install psycopg2-binary && \
+    apt-get purge -y --auto-remove libpq-dev gcc && \
+    rm -rf /var/lib/apt/lists/* && \
     /py/bin/pip install -r /tmp/requirements.txt && \
-    rm -rf /tmp && \
     adduser \
         --disabled-password \
         --no-create-home \
