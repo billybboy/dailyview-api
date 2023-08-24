@@ -16,12 +16,23 @@ Including another URLconf
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_jwt.views import obtain_jwt_token
+from django.conf.urls.static import static
+from django.conf import settings
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='api-schema'), name='api-docs'),
     path('api/user/', include('user.urls')),
-    path('api-token-auth/', obtain_jwt_token, name='token')
+    path('api/article/', include('article.urls')),
+    path('api/token-auth/', obtain_jwt_token, name='obtain_token'),
+    path('api/token-refresh/', refresh_jwt_token, name='refresh_token'),
+    path('api/token-verify/', verify_jwt_token, name='verify_token'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT,
+    )
