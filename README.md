@@ -19,6 +19,10 @@
 ```
 git clone git@github.com:billybboy/dailyview-api.git
 ```
+進入專案資料夾：
+```
+cd dailyview-api
+```
 建立 docker image：
 ```
 docker-compose build
@@ -27,6 +31,16 @@ docker-compose build
 ```
 docker-compose up
 ```
+
+<h4><b>使用說明</b></h4>
+
+- /api/user/create/：創建使用者
+- /api/token-auth/：產生 JWT access token
+- /api/token-refresh/：獲取 refrech token
+- /api/article/articles/：獲取所有文章及新增文章
+- /api/article/articles/{id}/：獲取、修改、刪除該 id 文章
+- /api/article/articles/{id}/upload_image/：上傳圖片至該 id 文章(使用 form-data)
+
 <h4><b>專案畫面</b></h4>
 
 ![](https://upload.cc/i1/2023/08/24/3bdO2Y.jpg)
